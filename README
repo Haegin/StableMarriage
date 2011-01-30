@@ -1,0 +1,3 @@
+An implementation of the Stable Marriage algorithm in Java using threads.
+
+Instead of marrying people this marries students to projects as it's something I did for university work.
