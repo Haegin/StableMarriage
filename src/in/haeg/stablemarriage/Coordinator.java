@@ -12,17 +12,17 @@ public class Coordinator {
 	private ArrayList<Student> students = new ArrayList<Student>();
 	private int runningCount;
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		Coordinator coordinator = new Coordinator(250);
+		Coordinator coordinator;
+		for (int i = 0; i < 1000; i++) {
+			coordinator = new Coordinator(100);
+		}
 	}
 	
 	public static ArrayList<Integer> randomList(int length) {
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		Random generator = new Random();
-		int r, t;
+		int r;
 		list.add(0, 1);
 		for (int i = 1; i < length; i++) {
 			// Put the new item in a random place and put the item from that place on the end.
@@ -33,18 +33,18 @@ public class Coordinator {
 		return list;
 	}
 	
-	public void registerMarriage() {
+	public synchronized void registerMarriage() {
 		runningCount -= 1;
 		if (runningCount == 0) {
-			System.out.println();
+			//System.out.println();
 			for (Student s : students) {
 				s.printResults();
+				s.terminate();
 			}
-			System.exit(0);
 		}
 	}
 	
-	public void registerDivorce() {
+	public synchronized void registerDivorce() {
 		runningCount += 1;
 	}
 	
@@ -85,6 +85,14 @@ public class Coordinator {
 		for (Student s : students) {
 			s.start();
 		}
+		
+		for (Student s : students) {
+			try {
+				s.join();
+			} catch (InterruptedException e) {
+			}
+		}
+		System.out.println("Done.");
 		
 	}
 	
