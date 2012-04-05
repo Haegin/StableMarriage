@@ -14,19 +14,19 @@ public class Coordinator {
 
 	public static void main(String[] args) {
 		Coordinator coordinator;
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 10; i++) {
 			coordinator = new Coordinator(100);
 		}
 	}
 	
-	public static ArrayList<Integer> randomList(int length) {
-		ArrayList<Integer> list = new ArrayList<Integer>();
+	public static ArrayList<Integer> randomList(int length) throws OutOfMemoryError {
+		ArrayList<Integer> list = new ArrayList<Integer>(length);
 		Random generator = new Random();
 		int r;
 		list.add(0, 1);
 		for (int i = 1; i < length; i++) {
 			// Put the new item in a random place and put the item from that place on the end.
-			r = generator.nextInt(i);
+    		r = generator.nextInt(i);
 			list.add(i, list.get(r));
 			list.set(r, i+1);
 		}
